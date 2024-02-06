@@ -57,11 +57,11 @@ const App = () => {
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
           // Dark mode
           await StatusBar.setBackgroundColor({ color: '#212121' }) // Set dark color
-          await StatusBar.setStyle({ style: Style.Light }) // Set light text color
+          await StatusBar.setStyle({ style: Style.Dark }) // Set light text color
         } else {
           // Light mode
           await StatusBar.setBackgroundColor({ color: '#FAFAFA' }) // Set light color
-          await StatusBar.setStyle({ style: Style.Dark }) // Set dark text color
+          await StatusBar.setStyle({ style: Style.Light }) // Set dark text color
         }
       }
     }
