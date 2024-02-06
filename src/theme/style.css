@@ -1,0 +1,17 @@
+* {box-sizing:border-box;}
+
+.input {
+  min-height: 37px!important;flex-grow: none;display:block;
+}
+
+.header-ios ion-toolbar:last-of-type {
+  --border-width: 0 0 0px
+}
+
+.border, .border-t, .border-b, .border-r, .border-l {
+  border-color: rgba(0,0,0,0.05);
+}
+
+.resulttexts p {
+  opacity: 0.9;
+}
