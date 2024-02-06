@@ -1,3 +1,6 @@
+import { useEffect } from 'react'
+import { isPlatform } from '@ionic/react'
+import { StatusBar, Style } from '@capacitor/status-bar'
 import { Redirect, Route } from 'react-router-dom'
 import { IonReactRouter } from '@ionic/react-router'
 import GlobalContext from './components/GlobalContext'
@@ -11,7 +14,7 @@ import {
   IonTabButton,
   IonTabs,
   setupIonicReact
-} from '@ionic/react';
+} from '@ionic/react'
 import {
   ellipse, square, triangle, bookOutline, timerOutline, bookmarksOutline, settingsOutline
 } from 'ionicons/icons'
@@ -37,8 +40,6 @@ import '@ionic/react/css/text-transformation.css'
 import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
 
-//import './js/tailwind.js'
-
 import './theme/style.css'
 
 /* Theme variables */
@@ -49,48 +50,91 @@ setupIonicReact({
   hardwareBackButton: true
 })
 
-const App = () => (
-  <GlobalContext>
-    <IonApp>
-      <IonReactRouter>
-      
-        <IonTabs>
+const App = () => {
+  useEffect(() => {
+    const setStatusBarColor = async () => {
+      if (isPlatform('android')) {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          // Dark mode
+          await StatusBar.setBackgroundColor({ color: '#212121' }) // Set dark color
+          await StatusBar.setStyle({ style: Style.Light }) // Set light text color
+        } else {
+          // Light mode
+          await StatusBar.setBackgroundColor({ color: '#FAFAFA' }) // Set light color
+          await StatusBar.setStyle({ style: Style.Dark }) // Set dark text color
+        }
+      }
+    }
+  
+    const updateStatusBarColor = async () => {
+      if (isPlatform('android')) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', async (e) => {
+          await setStatusBarColor()
+        })
+  
+        await setStatusBarColor() // Initial setting
+      }
+    }
+  
+    if (window.Capacitor && isPlatform('android')) {
+      // For Capacitor apps on Android
+      if (window.Capacitor.isNative) {
+        // For native apps
+        updateStatusBarColor()
+      }
+    }
+  
+    return () => {
+      // Clean up event listener
+      if (isPlatform('android')) {
+        window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', updateStatusBarColor)
+      }
+    }
+  }, [])
+
+  return (
+    <GlobalContext>
+      <IonApp>
+        <IonReactRouter>
         
-          <IonRouterOutlet>
-            <Route exact path="/dictionary" component={Dictionary} />
-            <Route exact path="/dictionary/:word" component={WordResult} />
-            
-            <Route exact path="/bookmarks" component={Bookmarks} />
-            <Route exact path="/history" component={History} />
-            <Redirect exact from="/" to="/dictionary" />
-          </IonRouterOutlet>
+          <IonTabs>
           
-          
-          <IonTabBar
-            slot="bottom"
-            className="p-2 border-t dark:border-white/10"
-          >
-            <IonTabButton tab="tab1" href="/dictionary">
-              <IonIcon aria-hidden="true" icon={bookOutline} />
-              <IonLabel>Dictionary</IonLabel>
-            </IonTabButton>
+            <IonRouterOutlet>
+              <Route exact path="/dictionary" component={Dictionary} />
+              <Route exact path="/dictionary/:word" component={WordResult} />
+              
+              <Route exact path="/bookmarks" component={Bookmarks} />
+              <Route exact path="/history" component={History} />
+              <Redirect exact from="/" to="/dictionary" />
+            </IonRouterOutlet>
             
-            <IonTabButton tab="tab3" href="/bookmarks">
-              <IonIcon aria-hidden="true" icon={bookmarksOutline} />
-              <IonLabel>Bookmarks</IonLabel>
-            </IonTabButton>
             
-            <IonTabButton tab="tab2" href="/history">
-              <IonIcon aria-hidden="true" icon={timerOutline} />
-              <IonLabel>History</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
+            <IonTabBar
+              slot="bottom"
+              className="p-2 border-t dark:border-white/10"
+            >
+              <IonTabButton tab="tab1" href="/dictionary">
+                <IonIcon aria-hidden="true" icon={bookOutline} />
+                <IonLabel>Dictionary</IonLabel>
+              </IonTabButton>
+              
+              <IonTabButton tab="tab3" href="/bookmarks">
+                <IonIcon aria-hidden="true" icon={bookmarksOutline} />
+                <IonLabel>Bookmarks</IonLabel>
+              </IonTabButton>
+              
+              <IonTabButton tab="tab2" href="/history">
+                <IonIcon aria-hidden="true" icon={timerOutline} />
+                <IonLabel>History</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+            
+          </IonTabs>
           
-        </IonTabs>
-        
-      </IonReactRouter>
-    </IonApp>
-  </GlobalContext>
-)
+        </IonReactRouter>
+      </IonApp>
+    </GlobalContext>
+  )
+}
 
 export default App
