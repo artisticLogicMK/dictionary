@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { isPlatform } from '@ionic/react'
 import { StatusBar, Style } from '@capacitor/status-bar'
+import { Network } from '@capacitor/network'
 import { Redirect, Route } from 'react-router-dom'
 import { IonReactRouter } from '@ionic/react-router'
 import GlobalContext from './components/GlobalContext'
@@ -58,7 +59,7 @@ const App = () => {
       if (isPlatform('android')) {
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
           // Dark mode
-          await StatusBar.setBackgroundColor({ color: '#212121' }) // Set dark color
+          await StatusBar.setBackgroundColor({ color: '#0D0D0D' }) // Set dark color
           await StatusBar.setStyle({ style: Style.Dark }) // Set light text color
         } else {
           // Light mode
@@ -86,7 +87,7 @@ const App = () => {
       }
     }
     
-    // check for network availability
+    // check for network availability, client side (browser wise)
     setInterval(() => {
       if (!navigator.onLine) {
         setOnline(false)
@@ -94,6 +95,15 @@ const App = () => {
         setOnline(true)
       }
     }, 1000)
+
+    // natively check for network availability (android/ios)
+    Network.addListener('networkStatusChange', status => {
+      if (!status.connected || status.connectionType === 'none') {
+        setOnline(false)
+      } else {
+        setOnline(true)
+      }
+    })
   
     return () => {
       // Clean up event listener

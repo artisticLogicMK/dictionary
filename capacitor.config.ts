@@ -1,4 +1,4 @@
-import { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
   appId: 'com.artisticmk.xdictionary',
@@ -15,6 +15,6 @@ const config: CapacitorConfig = {
       "splashImmersive": true,
     }
   }*/
-};
+}
 
-export default config;
+export default config

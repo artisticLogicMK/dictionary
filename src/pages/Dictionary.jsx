@@ -45,7 +45,7 @@ const Dictionary = () => {
                 {homeItems.map((item, i) => (
                   <div
                     key={i}
-                    className="inline-flex flex-col items-center justify-center w-28 h-24 bg-black/5 dark:bg-white/[.08] text-black/55 dark:text-white/80 border dark:border-white/15 active:bg-black/10 dark:active:bg-white/15 rounded-2xl mx-1.5 cp"
+                    className="inline-flex flex-col items-center justify-center w-28 h-24 bg-black/5 dark:bg-white/[.08] text-black/55 dark:text-white/80 border dark:border-white/[.08] active:bg-black/10 dark:active:bg-white/15 rounded-2xl mx-1.5 cp"
                     onClick={() => item.getWord(history)}
                   >
                     <IonIcon icon={item.icon} className="text-2xl" ></IonIcon>
