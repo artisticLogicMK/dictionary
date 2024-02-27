@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { isPlatform } from '@ionic/react'
 import { StatusBar, Style } from '@capacitor/status-bar'
 import { Redirect, Route } from 'react-router-dom'
@@ -16,7 +16,7 @@ import {
   setupIonicReact
 } from '@ionic/react'
 import {
-  ellipse, square, triangle, bookOutline, timerOutline, bookmarksOutline, settingsOutline
+  bookOutline, timerOutline, bookmarksOutline, wifiOutline
 } from 'ionicons/icons'
 
 import Dictionary from './pages/Dictionary'
@@ -51,6 +51,8 @@ setupIonicReact({
 })
 
 const App = () => {
+  const [online, setOnline] = useState(true)
+  
   useEffect(() => {
     const setStatusBarColor = async () => {
       if (isPlatform('android')) {
@@ -83,6 +85,15 @@ const App = () => {
         updateStatusBarColor()
       }
     }
+    
+    // check for network availability
+    setInterval(() => {
+      if (!navigator.onLine) {
+        setOnline(false)
+      } else {
+        setOnline(true)
+      }
+    }, 1000)
   
     return () => {
       // Clean up event listener
@@ -133,6 +144,13 @@ const App = () => {
           
         </IonReactRouter>
       </IonApp>
+      
+      {!online &&
+        <div className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-white/90 dark:bg-black/90">
+          <IonIcon icon={wifiOutline} className="text-7xl opacity-25" />
+          <p className="text-sm opacity-75">Please check cellular data or wifi...</p>
+        </div>
+      }
     </GlobalContext>
   )
 }

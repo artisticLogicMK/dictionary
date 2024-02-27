@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import storage from '../lib/storage'
+import moment from 'moment'
 
-import { IonContent, IonPage, IonRouterLink, IonList, IonItem, IonButtons, IonButton, IonIcon, IonRadioGroup, IonRadio } from '@ionic/react'
-import { closeOutline, bookmarkOutline, bookmark } from 'ionicons/icons'
+import { IonContent, IonPage, IonRouterLink, IonList, IonItem, IonButtons, IonButton, IonIcon, IonRadioGroup, IonRadio, useIonViewDidEnter } from '@ionic/react'
+import { closeOutline } from 'ionicons/icons'
 import NavMenu from '../components/NavMenu'
 import BookmarkHeader from '../components/BookmarkHeader'
 import Filter from '../components/Filter'
 
 const History = () => {
+  const [history, setHistory] = useState([])
   const [filter, setFilter] = useState('chrono')
   
   const changeFilter = (type) => {
@@ -16,9 +19,45 @@ const History = () => {
   const handleClick = (e) => {
     if (e.target.id === 'btn') {
       e.preventDefault()
-      alert(677)
     }
   }
+  
+  const fetchHistory = async () => {
+    const _history = await storage.get('history')
+
+    if (_history) {
+      if (filter === "chrono") {
+        // display chronologically
+        const sort = _history.sort((a, b) => b.time - a.time)
+        setHistory(sort)
+      }
+      else {
+        const sort = _history.sort((a, b) => a.word.localeCompare(b.word))
+        setHistory(sort)
+      }
+    }
+  }
+  
+  const deleteHistory = async (time) => {
+    let _history = await storage.get('history')
+    
+    // filter out bookmark by time el
+    const out = _history.filter(obj => obj.time !== time)
+    
+    // save history storage
+    await storage.set('history', out)
+    
+    // update list
+    fetchHistory()
+  }
+  
+  useEffect(() => {
+    fetchHistory()
+  }, [filter])
+  
+  useIonViewDidEnter(() => {
+    fetchHistory()
+  })
   
   return (
     <>
@@ -44,30 +83,36 @@ const History = () => {
       
       
         <IonContent fullscreen>
-          <div className="px-4 pb-6">
-            {[1,2, 3].map((d, i) => (
-              <IonRouterLink routerLink={'/dictionary'} color="dark" onClick={handleClick}>
-                <div key={i} className="flex justify-between items-center py-2 border-b dark:border-white/10 active:bg-black/5 dark:active:bg-white/10">
+          <div className="pb-6">
+            {history && history.map((his, i) => (
+              <IonRouterLink
+                key={i}
+                routerLink={'/dictionary/'+his.word}
+                color="dark"
+                onClick={handleClick}
+              >
+                <div key={i} className="flex justify-between items-center pl-4 pr-1 py-2 border-b dark:border-white/10 active:bg-black/5 dark:active:bg-white/10">
                   <div>
-                    <p className="text-base">interstellar</p>
-                    <p className="text-sm opacity-60">1st March, 2924</p>
+                    <p className="text-base mb-1">
+                      {his.word}
+                    </p>
+                    <p className="text-sm opacity-60">
+                      {moment(his.time).format('D MMM, YYYY HH:mm a')}
+                    </p>
                   </div>
                   
-                  <div className="flex -right-3 relative">
-                    <IonButtons>
-                      <IonButton id="btn">
-                        <IonIcon icon={bookmarkOutline} slot="icon-only" className="text-[#3880ff] scale-[.85]"></IonIcon>
-                        <IonIcon icon={bookmark} slot="icon-only" className="text-yellow-400 scale-[.85] hidden"></IonIcon>
-                      </IonButton>
-                      
-                      <IonButton id="btn">
-                        <IonIcon icon={closeOutline} slot="icon-only" className="text-[#3880ff] mr-6"></IonIcon>
-                      </IonButton>
-                    </IonButtons>
-                  </div>
+                  <IonButtons>
+                    <IonButton id="btn" onClick={() => deleteHistory(his.time)}>
+                      <IonIcon icon={closeOutline} slot="icon-only" className="text-[#3880ff]"></IonIcon>
+                    </IonButton>
+                  </IonButtons>
                 </div>
               </IonRouterLink>
             ))}
+            
+            {history.length < 1 &&
+              <div className="opacity-50 mt-16 text-center text-4xl">....</div>
+            }
             
           </div>
         </IonContent>

@@ -1,9 +1,7 @@
 import { useRef, useState } from 'react'
 
 import { IonContent, IonPopover, IonButtons, IonButton, IonIcon } from '@ionic/react'
-import {
-  filterOutline
-} from 'ionicons/icons'
+import { filterOutline } from 'ionicons/icons'
 
 const Filter = ({ children }) => {
   const popover = useRef(null)

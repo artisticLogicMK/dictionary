@@ -9,7 +9,7 @@ const saveHistory = async (wordData) => {
   }
   
   // if last saved word is thesame, stop operation
-  if (_history && _history[0].word === wordData.word) return
+  if (_history.length && _history[0].word === wordData.word) return
   
   // store data to array
   _history.unshift(wordData)
