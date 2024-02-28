@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom'
 import { useGlobalContext } from '../components/GlobalContext'
 import moment from 'moment'
 
-import { IonIcon, IonContent, IonMenu, IonHeader, IonRouterLink, IonList, IonItem, IonLabel, IonMenuToggle, IonToolbar } from '@ionic/react'
+import { IonIcon, IonContent, IonMenu, IonHeader, IonList, IonItem, IonLabel, IonMenuToggle, IonToolbar } from '@ionic/react'
 import {
   calendarOutline, timerOutline, shuffleOutline, bookmarkOutline
 } from 'ionicons/icons'

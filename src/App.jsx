@@ -14,6 +14,7 @@ import {
   IonTabBar,
   IonTabButton,
   IonTabs,
+  IonButton,
   setupIonicReact
 } from '@ionic/react'
 import {
@@ -158,7 +159,10 @@ const App = () => {
       {!online &&
         <div className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-white/90 dark:bg-black/90">
           <IonIcon icon={wifiOutline} className="text-7xl opacity-25" />
-          <p className="text-sm opacity-75">Please check cellular data or wifi...</p>
+          <p className="text-sm opacity-75 mb-3">Please check cellular data or wifi...</p>
+          <IonButton size="small" fill="outline" color="medium" onClick={() => setOnline(true)}>
+            Retry
+          </IonButton>
         </div>
       }
     </GlobalContext>

@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import { IonRouterLink } from '@ionic/react'
 import saveHistory from '../lib/saveHistory'
 
+import { IonIcon } from '@ionic/react'
+import { refreshOutline } from 'ionicons/icons'
+
 const WordFind = ({ word }) => {
   const [meaningsSyn, setMeaningsSyn] = useState(null)
   const [pronounceSyn, setPronounceSyn] = useState(null)
@@ -31,6 +34,12 @@ const WordFind = ({ word }) => {
   
   return (
     <div className="py-3">
+      {!meaningsSyn &&
+        <div className='text-center py-1'>
+          <IonIcon icon={refreshOutline} size="small" className='animate-spin'></IonIcon>
+        </div>
+      }
+
       {meaningsSyn !== null && meaningsSyn.length > 0 && (
         <>
           <p className="text-base font-semibold mb-0.5">Synonymous in meaning</p>

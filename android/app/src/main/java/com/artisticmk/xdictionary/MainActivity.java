@@ -1,4 +1,4 @@
-package com.endpoints.dictionary;
+package com.artisticmk.xdictionary;
 
 import com.getcapacitor.BridgeActivity;
 
