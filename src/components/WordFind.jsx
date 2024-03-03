@@ -61,7 +61,7 @@ const WordFind = ({ word }) => {
 
       {pronounceSyn !== null && pronounceSyn.length > 0 && (
         <>
-          <p className="text-base font-semibold mb-0.5 mt-3">Synonymous in pronounciation</p>
+          <p className="text-base font-semibold mb-0.5 mt-3">Synonymous in pronunciation</p>
           <div className="text-[#3880ff] text-[0.93rem]">
             {pronounceSyn.map((p, i) => (
               <span key={i} className="mr-2 whitespace-nowrap">

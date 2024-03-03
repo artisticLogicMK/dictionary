@@ -206,7 +206,7 @@ const WordResult = ({ match }) => {
             
             {word.phonetic &&
               <div className="border-b dark:border-white/10 pb-3 mb-3">
-                <p className="text-base font-semibold mb-0.5">Pronounciation</p>
+                <p className="text-base font-semibold mb-0.5">Pronunciation</p>
                 <p className="text-sm ml-5">{word.phonetic}</p>
                 
                 <p

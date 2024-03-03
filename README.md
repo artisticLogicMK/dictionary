@@ -2,7 +2,7 @@
 
 ![App Logo](/public/social.png)
 
-A beautiful English dictionary and word finder mobile app accompanied by powerful word finding features built for the Android and IOS platforms.
+Presenting a sleek cloud English dictionary and word finder mobile app for Android and IOS. Search for words, find definitions, hear pronunciations, discover words synonymous in pronunciations and spellings, and track your search history. Perfect for learners and language enthusiasts alike.
 
 
 [![View App - xDictionary](https://img.shields.io/badge/View_App-xDictionary-161D27?style=for-the-badge)](https://xdictionary.netlify.app/) [![Screenshots - Behance](https://img.shields.io/badge/Screenshots-Behance-1769ff?style=for-the-badge)](https://www.behance.net/gallery/192637807/xDictionary-English-Dictionary-and-Word-Finder)
@@ -20,7 +20,7 @@ A beautiful English dictionary and word finder mobile app accompanied by powerfu
 ![Visual Studio Code](https://img.shields.io/badge/VS%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
 ## Features
-<strong>Word search  -  Speak word  -  Definition & Examples  -  Synonyms of meaning & spelling  -  Word of the day  -  Random word  -  Bookmarks  -  History...</strong>
+<strong>Word search  -  Word Pronunciation  -  Definition & Examples  -  Synonyms of meaning & spelling  -  Word of the day  -  Random word  -  Bookmarks  -  History...</strong>
 
 
 ## Getting Started
